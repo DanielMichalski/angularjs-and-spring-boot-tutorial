@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pl.dmichalski</groupId>
+    <artifactId>angularjs-tutorial</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+
+    <modules>
+        <module>C01_Introduction_To_AngularJS</module>
+    </modules>
+
+    <properties>
+        <maven-compiler-plugin.version>3.5</maven-compiler-plugin.version>
+        <java.source>1.8</java.source>
+        <java.target>1.8</java.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.source}</source>
+                    <target>${java.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="firstApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Controllers</div>
+</nav>
+
+<div class="container" ng-controller="FirstController">
+    <div class="row text-center">
+        {{ message }}
+    </div>
+</div>
+
+<div class="container" ng-controller="SecondController">
+    <div class="row text-center">
+        {{ message }}
+    </div>
+</div>
+
+<div class="container" ng-controller="VeryLongNameController as vm">
+    <div class="row text-center">
+        {{ vm.message }}
+    </div>
+</div>
+
+
+<hr>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="well" ng-controller="SettingsController">
+            <strong>User: </strong> {{ settings.firstName }} {{ settings.lastName }}
+
+            <hr />
+
+            <div ng-controller="PasswdController">
+                <strong> {{ passwdHistory.prev }}</strong> <br />
+                <strong> {{ passwdHistory.curr }}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    var app = angular.module('firstApp', []);
+    
+    app.controller('FirstController', ['$scope', function($scope) {
+        $scope.message = 'Message from first controller';
+    }]);
+
+    app.controller('SecondController', ['$scope', function($scope) {
+        $scope.message = 'Message from second controller'
+    }]);
+
+    app.controller('SettingsController', ['$scope', function($scope) {
+        $scope.settings = {
+            firstName: 'John',
+            lastName: 'Black'
+        }
+    }]);
+
+    app.controller('PasswdController', ['$scope', function($scope) {
+        $scope.passwdHistory = {
+            prev: 'old-password',
+            curr: 'current-password'
+        };
+    }]);
+
+    app.controller('VeryLongNameController', function() {
+        this.message = 'Very long message from controller';
+    });
+</script>
+</body>
+</html>

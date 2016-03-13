@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="firstApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">First App</div>
+</nav>
+
+<div class="container" ng-controller="FirstController">
+    <div class="row">
+
+        <h2 class="text-center"><strong>Order by {{ userName }}</strong></h2>
+
+        <hr>
+
+        <div class="col-xs-6">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="(id, product) in shoppingCart">
+                    <strong>{{ product.name }}</strong> - {{ product.price | currency }}
+                    <button ng-click="removeFromCart(id)" class="btn btn-xs btn-danger pull-right">X</button>
+                </li>
+            </ul>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>Shipment - </strong> {{ shippingPrice | currency }}
+                </li>
+            </ul>
+
+            <button class="btn btn-success" ng-click="confirmOrder()">Order</button>
+
+            <button class="btn btn-danger pull-right" ng-click="clearCart()">Clean bucket</button>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="well">Your comment: {{ comment }}</div>
+            <textarea class="form-control" ng-model="comment"></textarea>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    var app = angular.module('firstApp', []);
+
+    app.controller('FirstController', ['$scope', 'userProvider', function ($scope, userProvider) {
+
+        $scope.comment = '...add comment...';
+
+        $scope.shoppingCart = [
+            {name: 'Photoshop - Tips & Tricks', price: 99},
+            {name: 'ASP.NET MVC - in practice', price: 149},
+            {name: 'Photoshop - Tips & Tricks', price: 99},
+            {name: 'Photoshop, Illustrator and ZBrush', price: 129}
+        ];
+
+        $scope.shippingPrice = 14;
+
+        $scope.userName = userProvider.fullName();
+
+        $scope.confirmOrder = function () {
+            alert('Thank You! Your order has been sent!');
+            console.log('Comment: ' + $scope.comment);
+            console.log('Products: ' + $scope.shoppingCart.length);
+        };
+
+        $scope.clearCart = function () {
+            $scope.shoppingCart = [];
+        };
+
+        $scope.removeFromCart = function (id) {
+            $scope.shoppingCart.splice(id, 1);
+        };
+
+    }]);
+
+    app.factory('userProvider', function () {
+        return {
+            firstName: 'John',
+            lastName: 'Black',
+            email: 'johnblack@star.eu',
+            fullName: function () {
+                return this.firstName + ' ' + this.lastName;
+            }
+        };
+    });
+</script>
+</body>
+</html>

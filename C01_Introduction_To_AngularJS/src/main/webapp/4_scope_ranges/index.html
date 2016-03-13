@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="firstApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Scope ranges</div>
+</nav>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="well" ng-controller="FirstController">
+            {{ message }}
+
+            <br />
+            <button class="btn btn-primary" ng-click="showMessage()">Show message</button>
+
+            <br />
+            <strong> {{ alertMsg }}</strong>
+            <br />
+
+            <div class="well" ng-controller="SecondController">
+                {{ message }} - {{ $parent.message }}
+                <br />
+                {{ alertMsg }}
+                <br />
+                <button class="btn btn-primary" ng-click="showMessage()">Show message</button>
+
+                <hr>
+
+                <ul>
+                    <li ng-repeat="message in msgList">
+                        {{ message }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    var app = angular.module('firstApp', []);
+
+    app.controller('FirstController', ['$scope', function($scope) {
+        $scope.message = 'First message';
+        $scope.alertMsg = 'This is alert message';
+
+        $scope.showMessage = function () {
+            alert($scope.message);
+        }
+    }]);
+
+    app.controller('SecondController', ['$scope', function($scope) {
+        $scope.message = 'Second message';
+
+        $scope.$parent.message = 'Override message';
+
+        $scope.msgList = [
+                'Lorem ipsum dolor sit.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                'Praesent feugiat imperdiet metus.',
+                'Duis sodales consectetur nibh.'
+        ];
+
+        $scope.showMessage = function () {
+            alert($scope.message);
+        }
+    }]);
+
+</script>
+</body>
+</html>
