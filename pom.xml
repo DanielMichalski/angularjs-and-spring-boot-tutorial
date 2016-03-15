@@ -11,6 +11,7 @@
 
     <modules>
         <module>C01_Introduction_To_AngularJS</module>
+        <module>C02_Directives</module>
     </modules>
 
     <properties>

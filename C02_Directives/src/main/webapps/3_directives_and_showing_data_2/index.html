@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Directives and showing data 2</div>
+</nav>
+
+<div class="container">
+    <div class="row text-center" ng-controller="Controller">
+
+        <!--<div class="row">-->
+            <!--<select class="form-control" ng-model="showUsers">-->
+                <!--<option value="all">All</option>-->
+                <!--<option value="active">Active</option>-->
+                <!--<option value="admin">Admins</option>-->
+            <!--</select>-->
+        <!--</div>-->
+
+        <!--<div class="row text-center" ng-switch="showUsers">-->
+
+            <!--<div class="col-xs-12" ng-switch-default>Choose which list do you want to show</div>-->
+
+            <div class="col-xs-4">
+                <h3>All users</h3>
+                <ul class="list-group" ng-if="users.length">
+                    <li class="list-group-item" ng-repeat="user in users"
+                        ng-class="{first: $first, last: $last, middle: $middle, strong: $odd, underscore: $even}">
+                        {{ $index }} {{ user.name }}
+                        <img class="user-avatar" ng-src="{{ user.avatar }}" alt="">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-xs-4">
+                <h3>Active users</h3>
+                <ul class="list-group" ng-if="users.length">
+                    <li class="list-group-item" ng-repeat="(id, user) in users" ng-show="user.active"
+                        ng-class-even="'underscore'" ng-class-odd="'strong'">
+                        {{ id }} {{ user.name }}
+                        <img class="user-avatar" ng-src="{{ user.avatar }}" alt="">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-xs-4">
+                <h3>All admins</h3>
+                <ul class="list-group" ng-if="users.length">
+                    <li class="list-group-item" ng-repeat="user in users" ng-hide="user.role != 'admin'"
+                        ng-style="adminStyle">
+                        {{ user.name }}
+                        <img class="user-avatar" ng-src="{{ user.avatar }}" alt="">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', []);
+
+    app.controller('Controller', ['$scope', function ($scope) {
+        $scope.adminStyle = {
+            color: 'red',
+            fontWeight: 'bold',
+            textDecoration: 'underline'
+        };
+
+        $scope.users = [
+            {name: 'John1', active: true, role: "user", avatar: 'img/avatars/1.png'},
+            {name: 'John2', active: false, role: 'user', avatar: 'img/avatars/2.png'},
+            {name: 'John3', active: true, role: 'user', avatar: 'img/avatars/3.png'},
+            {name: 'John4', active: true, role: 'admin', avatar: 'img/avatars/4.png'},
+            {name: 'John5', active: false, role: 'user', avatar: 'img/avatars/5.png'},
+            {name: 'John6', active: true, role: 'user', avatar: 'img/avatars/6.png'},
+            {name: 'John7', active: true, role: 'user', avatar: 'img/avatars/7.png'},
+            {name: 'John8', active: false, role: 'user', avatar: 'img/avatars/8.png'},
+            {name: 'John9', active: false, role: 'user', avatar: 'img/avatars/9.png'},
+            {name: 'John10', active: true, role: 'admin', avatar: 'img/avatars/10.png'},
+            {name: 'John11', active: true, role: 'admin', avatar: 'img/avatars/11.png'}
+        ];
+    }]);
+
+</script>
+
+</body>
+</html>

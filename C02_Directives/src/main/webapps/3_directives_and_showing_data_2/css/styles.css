@@ -1,0 +1,57 @@
+body{
+    padding-top: 100px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+}
+
+.navbar-brand{
+    float: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.navbar-brand img{
+    height: 40px;
+}
+
+.navbar-heading{
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+}
+
+.user-avatar {
+    float: right;
+    height: 30px;
+}
+
+.light {
+    background-color: #ddd;
+}
+
+.dark {
+    background-color: #ccc;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.underscore {
+    text-decoration: underline;
+}
+
+.last {
+    background-color: red;
+}
+
+.middle {
+    background-color: orange;
+}
+
+.first {
+    background-color: green;
+}

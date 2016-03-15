@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Directives and showing data 1</div>
+</nav>
+
+<div class="container">
+    <div class="row text-center" ng-controller="Controller">
+        <p>{{ user.name }} - {{ user.position }}</p>
+
+        <hr>
+
+        <p><span ng-bind="user.name"></span> - <span ng-bind="user.position"></span></p>
+
+        <hr>
+
+        <p ng-bind-template="{{ user.name }} - {{  user.position }}"></p>
+
+        <hr>
+
+        <p>{{ htmlCode }}</p>
+
+        <hr>
+
+        <p ng-bind="htmlCode"></p>
+
+        <hr>
+
+        <p ng-bind-html="htmlCode"></p>
+
+        <hr>
+
+        <div ng-include="'member-template.html'"></div>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.5.0/angular-sanitize.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', ['ngSanitize']);
+
+    // First version
+    app.controller('Controller', ['$scope', function ($scope) {
+        $scope.user = {
+            name: 'John Black',
+            position: 'Web developer'
+        };
+
+        $scope.htmlCode = '<strong>This is a bold text</strong>';
+    }]);
+
+</script>
+
+</body>
+</html>
