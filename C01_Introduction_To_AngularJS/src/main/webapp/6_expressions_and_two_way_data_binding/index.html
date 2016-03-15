@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="firstApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Expressions and two way data binding</div>
+</nav>
+
+<div class="container">
+    <div class="row text-center" ng-controller="FirstController">
+        <p>{{ 3 + 4 * 2 }}</p>
+        <p>{{ 'John' + '@' + 'Black' }}</p>
+        <p>{{ error }}</p>
+        <p><strong>Kategoria na stałe: </strong>{{ ::messages[0] }}</p>
+        <p>{{ post.categories }}</p>
+
+        <hr>
+
+        <button class="btn btn-danger" ng-click="clearCategories()">Clear categories</button>
+        <button class="btn btn-success" ng-click="addCategories()">Add categories</button>
+
+        <hr>
+
+        <div class="col-xs-6"><textarea class="form-control" ng-model="comment"></textarea></div>
+        <div class="col-xs-6"><div class="well">{{ comment }}</div></div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('firstApp', []);
+
+    // First version
+    app.controller('FirstController', ['$scope', function ($scope) {
+        $scope.error = 'This is an error.';
+        $scope.comment = 'This is welcome comment';
+
+
+        $scope.messages = [
+            'First',
+            'Second',
+            'Third'
+        ];
+
+        $scope.post = {
+            title: 'Short lesson about programming',
+            categories: ['Programming', 'Graphics', 'Design']
+        };
+
+        $scope.clearCategories = function () {
+            $scope.post.categories = [];
+        };
+
+        $scope.addCategories = function () {
+            $scope.post.categories = ['Programming', 'Graphics', 'Design'];
+        }
+    }]);
+
+</script>
+
+</body>
+</html>
