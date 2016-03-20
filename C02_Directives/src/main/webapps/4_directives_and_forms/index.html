@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Directives and Forms</div>
+</nav>
+
+<div class="container">
+    <div class="row" ng-controller="Controller">
+        <div class="row">
+            <div ng-show="formSent" class="alert alert-success">
+                <strong>Success!</strong> Your personal information has been sent correctly!
+            </div>
+
+            <div ng-show="formSent" class="well">
+                <strong>Login: </strong> {{ member.login }} <br>
+                <strong>E-mail: </strong> {{ member.email }} <br>
+                <strong>Specialization: </strong> {{ member.specialization.name }} <br>
+                <strong>Technologies: </strong> <span ng-repeat="tech in member.technologies"> {{ tech.name }},</span> <br>
+                <strong>Account type: </strong> {{ member.account }} <br>
+            </div>
+
+            <form class="form-horizontal" ng-hide="formSent" ng-submit="formSent = true" novalidate>
+
+                <div class="form-group">
+                    <label for="uLogin" class="col-sm-2 control-label">Login</label>
+                    <div class="col-sm-6">
+                        <input id="uLogin" type="text" ng-model="member.login"
+                               ng-focus="loginPrompt = true" ng-blur="loginPrompt = false" class="form-control">
+                    </div>
+                    <div ng-show="loginPrompt" class="col-sm-4 login-prompt">
+                        From Your login we will create e-mail account
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="uEmail" class="col-sm-2 control-label">E-mail</label>
+                    <div class="col-sm-8">
+                        <input
+                                id="uEmail"
+                                type="email"
+                                ng-disabled="useEduEmail"
+                                ng-readonly="useEduEmail"
+                                ng-model="member.email"
+                                class="form-control">
+                    </div>
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                        ng-model="useEduEmail"
+                                        type="checkbox"
+                                        ng-disabled="!member.login"
+                                        ng-change="member.email = member.login + '@eduweb.pl'">
+                                Use e-mail i domain eduweb
+                                <span ng-show="member.login">({{ member.login }}@eduweb.pl)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="uSpec" class="col-sm-2 control-label">Specialization</label>
+                    <div class="col-sm-8">
+                        <select
+                                id="uspec"
+                                ng-model="member.specialization"
+                                ng-options="spec.name group by spec.type for spec in specializations"
+                                class="form-control">
+                            <option value="">-- Choose specialization --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Favourites technologies</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox" ng-repeat="tech in technologies">
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        ng-model="tech.selected"
+                                        value="tech.name"
+                                        ng-change="populateTechs()"
+                                        name="techs[]">
+                                {{ tech.name }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Account type</label>
+                    <div class="col-sm-8">
+                        <div class="radio" ng-repeat="type in accountTypes">
+                            <label>
+                                <input
+                                        ng-model="member.account"
+                                        ng-value="type"
+                                        type="radio">
+                                {{ type }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', []);
+
+    app.controller('Controller', ['$scope', 'filterFilter', function ($scope, filterFilter) {
+
+        $scope.useEduEmail = false;
+        $scope.loginPrompt = false;
+        $scope.formSent = false;
+
+        $scope.member = {};
+
+        $scope.specializations = [
+            {name: 'ASP.NET', type: 'Programming'},
+            {name: 'PHP', type: 'Programming'},
+            {name: 'HTML/CSS', type: 'Programming'},
+            {name: 'Photoshop', type: 'Graphics'},
+            {name: 'Illustrator', type: 'Graphics'},
+            {name: 'Premiere', type: 'Video'},
+            {name: 'Photoshop', type: 'Video'}
+        ];
+
+        $scope.technologies = [
+            {name: 'Photoshop', selected: false},
+            {name: 'Illustrator', selected: false},
+            {name: 'PHP', selected: false},
+            {name: 'ASP.NET', selected: false},
+            {name: 'JavaScript', selected: false},
+            {name: 'HTML/CSS', selected: false},
+            {name: 'MySQL', selected: false},
+            {name: 'Java', selected: false}
+        ];
+
+        $scope.accountTypes = [
+            'Standard',
+            'Optium',
+            'Premium',
+            'Premium+'
+        ];
+
+        $scope.populateTechs = function () {
+            $scope.member.technologies = filterFilter($scope.technologies, { selected: true});
+        }
+    }]);
+
+</script>
+
+</body>
+</html>

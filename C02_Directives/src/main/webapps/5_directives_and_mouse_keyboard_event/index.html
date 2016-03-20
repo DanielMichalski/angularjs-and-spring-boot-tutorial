@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Directives and Mouse/ Keyboard events</div>
+</nav>
+
+<div class="container">
+    <div class="container" ng-controller="Controller">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="well">
+                    <h3>Bank account personal data</h3>
+                    <strong>Recipient name</strong> Software Company Sp. z o.o. <br>
+                    <strong>Account number</strong>
+                    <span ng-copy="copyAccountNo()" ng-cut="copyAccountNo()">12 1234 1234 1234 1234 1234 1234</span>
+                    <div ng-show="accountNoCopied" class="copy">Account number has been sent!</div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="row">
+                    <h3>Do transfer</h3>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Account number</label>
+
+                            <div class="col-sm-7">
+                                <input ng-paste="pasteAccountNo()" type="text" class="form-control">
+                                <div ng-show="accountNoPaste" class="help-block red-info">Account number has ben pasted!
+                                    Check account number
+                                </div>
+                                <div ng-show="oneClickAlert" class="help-block red-info">Click twice to do a bank
+                                    transfer!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button class="btn btn-primary" ng-click="preventOneClick()" ng-dblclick="makeTransfer()">Do
+                                a bank transfer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row" ng-init="=''">
+            <div class="col-xs-6">
+                <textarea ng-keypress="keyEvent = $event" class="form-control" ng-model="comment"></textarea>
+            </div>
+            <div class="col-xs-6">
+                <strong>Number of characters:</strong> {{ comment.length }} <br>
+                <strong>Character's code:</strong> {{ keyEvent.keyCode }} <br>
+                <strong>Alt pressed:</strong> {{ keyEvent.altKey }} <br>
+                <strong>Shift pressed:</strong> {{ keyEvent.shiftKey }} <br>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div
+                        class="mouse-area"
+                        ng-mousedown="mouseStatus = 'You hold your mouse btn'"
+                        ng-mouseup="mouseStatus = 'You release your mouse btn'"
+                        ng-mouseover="mouseStatus = 'You are on div'"
+                        ng-mouseleave="mouseStatus = 'You arent on div'">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div ng-show="mouseStatus"><strong>Your mouse status:</strong> {{ mouseStatus }}</div>
+            <div ng-hide="mouseStatus">Focus on rectangle</div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', []);
+
+    app.controller('Controller', ['$scope', function ($scope) {
+
+        $scope.accountNoCopied = false;
+        $scope.accountNoPaste = false;
+        $scope.oneClickAlert = false;
+
+        $scope.comment = null;
+        $scope.keyEvent = null;
+        $scope.mouseStatus = null;
+
+        $scope.copyAccountNo = function () {
+            $scope.accountNoCopied = true;
+        };
+
+        $scope.pasteAccountNo = function () {
+            $scope.accountNoPaste = true;
+        };
+
+        $scope.preventOneClick = function () {
+            $scope.oneClickAlert = true;
+        };
+
+        $scope.makeTransfer = function () {
+            $scope.oneClickAlert = false;
+            alert('Bank transfer has been sent')
+        };
+
+    }]);
+
+</script>
+
+</body>
+</html>
