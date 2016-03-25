@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Custom directives</div>
+</nav>
+
+<div class="container" ng-controller="Controller">
+
+    <div class="row clearfix">
+        <h3>First team</h3>
+        <div ng-repeat="member in team1">
+            <div class="member well text-center bc-style">
+                <img class="avatar" ng-src="{{ member.avatar }}" alt="">
+                <h4>{{ member.name }}</h4>
+                <h6>{{ member.position }}</h6>
+            </div>
+        </div>
+        <div class="pull-right">
+            <business-card member="teamLeader"></business-card>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row clearfix">
+        <h3>Second team</h3>
+        <div ng-repeat="member in team2">
+            <business-card member="member" type="extended"></business-card>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row clearfix">
+        <h3>Third team</h3>
+        <div ng-repeat="member in team3">
+            <div business-card member="member" type="extended"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', []);
+
+    app.controller('Controller', ['$scope', function ($scope) {
+
+        $scope.teamLeader = {name: 'Team leader', position: 'Leader', avatar: 'img/avatars/7.png'};
+
+        $scope.team1 = [
+            {name: 'John Black1', position: 'WebDeveloper1', avatar: 'img/avatars/1.png'},
+            {name: 'John Black2', position: 'WebDeveloper2', avatar: 'img/avatars/2.png'},
+            {name: 'John Black3', position: 'WebDeveloper3', avatar: 'img/avatars/3.png'}
+        ];
+
+        $scope.team2 = [
+            {name: 'John Black4', position: 'WebDeveloper4', avatar: 'img/avatars/4.png', email: 'email1@ep3.eu'},
+            {name: 'John Black5', position: 'WebDeveloper5', avatar: 'img/avatars/5.png', email: 'email2@ep3.eu'},
+            {name: 'John Black6', position: 'WebDeveloper6', avatar: 'img/avatars/6.png', email: 'email3@ep3.eu'}
+        ];
+
+        $scope.team3 = [
+            {name: 'John Black7', position: 'WebDeveloper7', avatar: 'img/avatars/7.png', email: 'email4@ep3.eu'},
+            {name: 'John Black8', position: 'WebDeveloper8', avatar: 'img/avatars/8.png', email: 'email5@ep3.eu'},
+            {name: 'John Black9', position: 'WebDeveloper9', avatar: 'img/avatars/9.png', email: 'email6@ep3.eu'}
+        ];
+
+    }]);
+
+    app.directive('businessCard', function () {
+        return {
+            scope: {
+                member: '='
+            },
+//            template: '<div class="well text-center bc-style"><img ng-src="{{ member.avatar }}" alt=""> <h4>{{ member.name }}</h4> <h6>{{ member.position }}</h6> </div>'
+//            templateUrl: 'html/member-simple-bc.html'
+            templateUrl: function (elem, attr) {
+                attr.type = attr.type || 'simple';
+                return 'html/member-' + attr.type + '-bc.html';
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

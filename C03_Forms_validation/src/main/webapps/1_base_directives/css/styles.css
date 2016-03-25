@@ -1,0 +1,24 @@
+body{
+    padding-top: 100px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+}
+
+.navbar-brand{
+    float: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.navbar-brand img{
+    height: 25px;
+}
+
+.navbar-heading{
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    font-size: 25px;
+}
