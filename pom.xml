@@ -19,6 +19,7 @@
         <module>C05_Services</module>
         <module>C06_Modules</module>
         <module>C07_Functions_in_AngularJS</module>
+        <module>C08_CRM_AngularJS_and_Spring_Boot_Web_application</module>
     </modules>
 
     <properties>

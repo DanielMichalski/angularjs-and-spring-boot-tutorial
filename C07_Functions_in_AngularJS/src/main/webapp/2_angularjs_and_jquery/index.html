@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="exampleApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">AngularJS and JQuery</div>
+</nav>
+
+<div class="container" ng-controller="ExampleController">
+    <div class="row text-center">
+        <div class="well">
+            We are testing operations on DOM tree
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('exampleApp', []);
+
+    app.controller('ExampleController', ['$scope', function ($scope) {
+        // AngularJS functions
+        var $well = angular.element(document.querySelector('.container .well'));
+
+        $well
+                .css({
+                    color: 'blue',
+                    textDecoration: 'underline'
+                })
+                .addClass('big-text');
+
+        var $div = angular.element(document.createElement('div'));
+        $div
+                .text('Text in div')
+                .css({
+                    backgroundColor: 'gray',
+                    textTransform: 'uppercase'
+                });
+
+        $well.append($div);
+    }]);
+</script>
+
+</body>
+</html>
