@@ -1,0 +1,32 @@
+[
+  {
+    "name": "John Black",
+    "position": "WebDeveloper",
+    "avatar": "img/avatars/7.png"
+  },
+  {
+    "name": "Mery Jane",
+    "position": "GrapicsDesigner",
+    "avatar": "img/avatars/1.png"
+  },
+  {
+    "name": "Thomas Thicky",
+    "position": "Back-end Developer",
+    "avatar": "img/avatars/5.png"
+  },
+  {
+    "name": "Mark Tzuckenber",
+    "position": "Front-end Developer",
+    "avatar": "img/avatars/2.png"
+  },
+  {
+    "name": "Philip Philips",
+    "position": "Database administrator",
+    "avatar": "img/avatars/6.png"
+  },
+  {
+    "name": "Don tra volta",
+    "position": "System administrator",
+    "avatar": "img/avatars/9.png"
+  }
+]

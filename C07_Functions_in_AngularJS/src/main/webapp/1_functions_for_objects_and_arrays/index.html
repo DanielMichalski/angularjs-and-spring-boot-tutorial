@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="exampleApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Functions for objects and arrays</div>
+</nav>
+
+<div class="container" ng-controller="ExampleController">
+    <div class="row text-center">
+        <div class="well">
+            {{ shapeA.show() }}
+        </div>
+
+        <div class="well">
+            {{ shapeB.show() }}
+        </div>
+
+        <div class="well">
+            {{ finalOpt | json }}
+        </div>
+
+        <div class="well">
+            {{ simpleUsers }}
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('exampleApp', []);
+
+    app.controller('ExampleController', ['$scope', '$log', function ($scope, $log) {
+        $scope.shapeA = {
+            name: 'Object A',
+            width: 100,
+            height: 200,
+            subObj: {
+                subName: 'subObj',
+                subParam: 'subPar'
+            },
+            show: function () {
+                return this.name + ' (' + this.width + 'x' + this.height + ') ' +
+                        ' / ' + this.subObj.subName + ' ' + this.subObj.subParam;
+            }
+        };
+
+        // creating copy of object
+        $scope.shapeB = angular.copy($scope.shapeA);
+        $scope.shapeB.name = 'Object B';
+
+        // checking whether two objects are equals or not
+        $log.info(angular.equals($scope.shapeA, $scope.shapeB));
+
+        // merging three objects
+        var defaultOpts = {
+            backgroundColor: 'red',
+            fontSize: '13px',
+            color: 'white'
+        };
+
+        var optionsA = {
+            fontSize: '16px'
+        };
+
+        var optionsB = {
+            width: 100,
+            height: 150
+        };
+
+        $scope.finalOpt = angular.extend(defaultOpts, optionsA, optionsB);
+
+        // foreach
+        var users = [
+            {firstName: 'John', lastName: 'Black'},
+            {firstName: 'Mary', lastName: 'White'},
+            {firstName: 'Lucky', lastName: 'Luck'},
+            {firstName: 'Thomas', lastName: 'Nielsen'},
+            {firstName: 'Bob', lastName: 'Blob'},
+            {firstName: 'Maria', lastName: 'Backing'},
+            {firstName: 'Martin', lastName: 'Brown'}
+        ];
+
+        $scope.simpleUsers = [];
+
+        angular.forEach(users, function (value, key) {
+            $scope.simpleUsers.push(key + '. ' + value.firstName + ' ' + value.lastName);
+        });
+
+
+    }]);
+</script>
+
+</body>
+</html>

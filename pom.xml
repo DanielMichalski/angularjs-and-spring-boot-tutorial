@@ -17,6 +17,8 @@
         <module>C03_Forms_validation</module>
         <module>C04_Filters</module>
         <module>C05_Services</module>
+        <module>C06_Modules</module>
+        <module>C07_Functions_in_AngularJS</module>
     </modules>
 
     <properties>

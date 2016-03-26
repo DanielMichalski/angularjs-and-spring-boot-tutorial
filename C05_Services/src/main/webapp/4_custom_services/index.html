@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="directives">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Custom directives</div>
+</nav>
+
+<div class="container" ng-controller="Controller">
+
+    <div class="row clearfix">
+        <h3>First team</h3>
+
+        <button class="btn btn-danger action-btn" ng-click="notifyTeam(team1)">
+            Send an email
+        </button>
+
+        <div class="clearfix"></div>
+
+        <div ng-repeat="member in team1">
+            <div class="bc-style">
+                <business-card type="extended" member="member"></business-card>
+            </div>
+        </div>
+        <div class="pull-right">
+            <business-card member="teamLeader"></business-card>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row clearfix">
+        <h3>Second team</h3>
+
+        <button class="btn btn-danger action-btn" ng-click="notifyTeam(team2)">
+            Send an email
+        </button>
+
+        <div class="clearfix"></div>
+
+        <div ng-repeat="member in team2">
+            <div class="bc-style">
+                <business-card type="extended" member="member"></business-card>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('directives', []);
+
+    app.controller('Controller', ['$scope', 'memberService', 'teamNotifier',
+        function ($scope, memberService, teamNotifier) {
+            memberService('team1', function (data) {
+                $scope.team1 = data;
+            });
+
+            memberService('team2', function (data) {
+                $scope.team2 = data;
+            });
+
+            memberService('leader', function (data) {
+                $scope.teamLeader = data;
+            });
+
+            $scope.notifyTeam = function (team) {
+                teamNotifier(team, 'Go work');
+            }
+        }]);
+
+    app.factory('teamNotifier', ["$log", function ($log) {
+        var notifyMember = function (member, message) {
+            $log.info('Sending message [' + message + '] to [' + member.email + ']');
+        };
+
+        return function (team, message) {
+            for (var i = 0; i < team.length; i++) {
+                notifyMember(team[i], message);
+            }
+        };
+    }]);
+
+    app.factory('memberService', ['$http', '$log', function ($http, $log) {
+        var urls = {
+            'team1': 'json/members-team1.json',
+            'team2': 'json/members-team2.json',
+            'leader': 'json/team-leader.json'
+        };
+
+        return function (type, callback) {
+            var url = urls[type];
+            callback = callback || function () {
+                    };
+
+            $http.get(url)
+                    .success((callback))
+                    .error(function (data, status) {
+                        $log.error('Error while loading data. URL: ' + url + ', status: ' + status);
+                    });
+        }
+    }]);
+
+    app.directive('businessCard', function () {
+        return {
+            scope: {
+                member: '='
+            },
+            templateUrl: function (elem, attr) {
+                attr.type = attr.type || 'simple';
+                return 'html/member-' + attr.type + '-bc.html';
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>

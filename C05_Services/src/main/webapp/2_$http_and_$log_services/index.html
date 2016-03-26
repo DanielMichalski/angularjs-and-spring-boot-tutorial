@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="services">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">$http and $log services</div>
+</nav>
+
+<div class="container" ng-controller="Controller">
+    <div class="row clearfix">
+        <h3>First team</h3>
+        <div ng-repeat="member in team1">
+            <business-card member="member"></business-card>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('services', []);
+
+    app.controller('Controller', ['$scope', '$http', '$log', function ($scope, $http, $log) {
+
+        $scope.team1 = [];
+
+        $http.get('json/members-team.json')
+                .success(function (data) {
+                    $scope.team1 = data;
+                    $log.info('Loading successful')
+                })
+                .error(function (data) {
+                    $log.error('There was an error while loading users list');
+                });
+
+    }]);
+
+    app.directive('businessCard', function () {
+        return {
+            restrict: 'AE',
+            scope: {
+                member: '='
+            },
+            templateUrl: 'html/member-simple-bc.html'
+        };
+    });
+
+</script>
+
+</body>
+</html>

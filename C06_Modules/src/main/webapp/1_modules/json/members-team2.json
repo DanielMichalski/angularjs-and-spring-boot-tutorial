@@ -1,0 +1,20 @@
+[
+  {
+    "name": "John Black4",
+    "position": "WebDeveloper4",
+    "avatar": "img/avatars/4.png",
+    "email": "email1@ep3.eu"
+  },
+  {
+    "name": "John Black5",
+    "position": "WebDeveloper5",
+    "avatar": "img/avatars/5.png",
+    "email": "email2@ep3.eu"
+  },
+  {
+    "name": "John Black6",
+    "position": "WebDeveloper6",
+    "avatar": "img/avatars/6.png",
+    "email": "email3@ep3.eu"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "John Black1",
+    "position": "WebDeveloper1",
+    "avatar": "img/avatars/1.png",
+    "email": "email1@wp3.eu"
+  },
+  {
+    "name": "John Black2",
+    "position": "WebDeveloper2",
+    "avatar": "img/avatars/2.png",
+    "email": "email2@wp3.eu"
+  },
+  {
+    "name": "John Black3",
+    "position": "WebDeveloper3",
+    "avatar": "img/avatars/3.png",
+    "email": "email3@wp3.eu"
+  }
+]
+

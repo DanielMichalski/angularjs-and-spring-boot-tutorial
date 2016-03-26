@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="exampleApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">$cookies and $cookiesStore services</div>
+</nav>
+
+<div class="container" ng-controller="ExampleController">
+    <div class="row text-center">
+        <div class="well">
+            {{ ciasteczka }}
+        </div>
+
+        <div class="col-xs-6">
+            <input type="text" ng-model="cName" class="form-control" placeholder="Cookie name">
+        </div>
+        <div class="col-xs-6">
+            <input type="text" ng-model="cValue" class="form-control" placeholder="Cookie value">
+        </div>
+
+        <div class="clearfix"></div>
+
+        <br>
+
+        <button class="btn btn-success" ng-click="saveCookie()">Save cookie</button>
+        <button class="btn btn-danger" ng-click="removeCookie()">Remove cookie</button>
+        <button class="btn btn-info" ng-click="showCookie()">Show cookie</button>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-cookies.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('exampleApp', ['ngCookies']);
+
+    app.controller('ExampleController', ['$scope', '$cookies', '$cookieStore', '$log',
+        function($scope, $cookies, $cookieStore, $log){
+
+        var userObj = {
+            name: '',
+            position: '',
+            technologies: ['PHP', 'HTML', 'CSS', 'JavaScript']
+        };
+
+        $scope.ciasteczka = $cookies;
+
+        $cookieStore.put('user', userObj);
+
+        $scope.saveCookie = function () {
+            // $cookies[$scope.cName] = $scope.cValue;
+            $cookieStore.put($scope.cName, $scope.cValue);
+        };
+
+        $scope.removeCookie = function () {
+            // delete $cookies[$scope.cName];
+            $cookieStore.remove($scope.cName);
+        };
+
+        $scope.showCookie = function () {
+            // alert($cookies[$scope.cName]);
+            $log.info($cookieStore.get($scope.cName));
+        };
+
+    }]);
+</script>
+
+</body>
+</html>
