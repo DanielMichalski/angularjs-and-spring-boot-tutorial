@@ -22,3 +22,8 @@ body{
     text-align: center;
     font-size: 25px;
 }
+
+span.info-block {
+    color: red;
+    font-size: 13px;
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="formValidation">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">ngMessages Directive</div>
+</nav>
+
+<div class="container">
+    <div class="row" ng-controller="Controller">
+        <form name="form" class="form-horizontal" novalidate>
+
+            <div ng-show="form.$submitted">
+                <div ng-show="form.$valid" class="alert alert-success">
+                    <strong>Success! Your data has been saved correctly!</strong>
+                </div>
+
+                <div ng-show="form.$invalid" class="alert alert-warning">
+                    <strong>Warning! There are some errors on the form!</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uName" class="col-sm-3 control-label">Name and surname</label>
+                <div class="col-sm-5">
+                    <input
+                            type="text"
+                            name="uName"
+                            id="uName"
+                            ng-model="user.name"
+                            required="required"
+                            class="form-control">
+                    <div ng-messages="form.uName.$error" ng-show="form.$submitted || form.uName.$touched">
+                        <span ng-message="required"
+                              class="info-block">You must set name and surname*</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uMail" class="col-sm-3 control-label">E-mail*</label>
+                <div class="col-sm-5">
+                    <input
+                            type="email"
+                            name="uMail"
+                            id="uMail"
+                            ng-model="user.mail"
+                            required="required"
+                            class="form-control">
+                    <div ng-messages="form.uMail.$error" ng-show="form.$submitted || form.uMail.$touched">
+                        <span ng-message="required" class="info-block">You must set e-mail</span>
+                        <span ng-message="email" class="info-block">You must set valid e-mail</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uPhone" class="col-sm-3 control-label">Phone number</label>
+                <div class="col-sm-5">
+                    <input
+                            type="text"
+                            name="uPhone"
+                            id="uPhone"
+                            ng-model="user.phone"
+                            pattern="\d{3}-\d{3}-\d{3}"
+                            placeholder="format: 123-123-123"
+                            class="form-control">
+                    <div ng-messages="form.uPhone.$error" ng-show="form.$submitted || form.uPhone.$touched">
+                        <span ng-message="pattern" class="info-block">You must set phone number in format 123-123-123</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uEvent" class="col-sm-3 control-label">Event*</label>
+                <div class="col-sm-5">
+                    <select
+                            id="uEvent"
+                            name="uEvent"
+                            ng-model="user.event"
+                            required="required"
+                            class="form-control">
+                        <option value="">-- Choose event --</option>
+                        <option value="angular">AngularJS</option>
+                        <option value="js">JavaScript</option>
+                        <option value="html5">HTML 5</option>
+                    </select>
+                    <div ng-messages="form.uEvent.$error" ng-show="form.$submitted || form.uEvent.$touched">
+                        <span ng-message="required" class="info-block">Choose event</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uTickets" class="col-sm-3 control-label">Number of tickets*</label>
+                <div class="col-sm-5">
+                    <input
+                            type="number"
+                            id="uTickets"
+                            name="uTickets"
+                            ng-model="user.tickets"
+                            required="required"
+                            min="1"
+                            max="4"
+                            class="form-control">
+                    <div ng-messages="form.uTickets.$error" ng-show="form.$submitted || form.uTickets.$touched">
+                        <span ng-message="required" class="info-block">You must set number of tickets</span>
+                        <span ng-message="min" class="info-block">Minimum value is 1</span>
+                        <span ng-message="max" class="info-block">Maximum value is 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="checkbox">
+                        <label>
+                            <input
+                                    type="checkbox"
+                                    id="uConfirm"
+                                    name="uConfirm"
+                                    ng-model="user.confirm"
+                                    required="required">
+                            I accept wit terms
+                        </label>
+                    </div>
+
+                    <div ng-messages="form.uConfirm.$error" ng-show="form.$submitted || form.uConfirm.$touched">
+                        <span ng-message="required" class="info-block">Accept terms</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-10 col-sm-offset-2">
+                <button class="btn btn-success">Save on event</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-messages.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('formValidation', ['ngMessages']);
+
+    // First version
+    app.controller('Controller', ['$scope', function ($scope) {
+
+    }]);
+
+</script>
+
+</body>
+</html>
