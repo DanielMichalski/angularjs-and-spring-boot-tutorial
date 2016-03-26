@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="filters3">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Custom filters</div>
+</nav>
+
+<div class="container">
+    <div class="row" ng-controller="Controller">
+        <div class="text-center">
+            Email has been sent to: {{ email }}
+        </div>
+
+        <div class="text-center">
+            Email has been sent to: {{ email | maskEmailWithoutParams}}
+        </div>
+
+        <div class="text-center">
+            Email has been sent to: {{ email | maskEmailWithParams: 5: '*'}}
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <p>{{ 'first' | joiner }}</p>
+            <p>{{ 'tank' | joiner }}</p>
+            <p>{{ 123 | joiner }}</p>
+            <p>{{ 'end' | joiner }}</p>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('filters3', []);
+
+    app.controller('Controller', ['$scope', function ($scope) {
+        $scope.email = 'thomas_black@bekipa.pl'
+    }]);
+
+    app.filter('maskEmailWithoutParams', function () {
+        return function (email) {
+            email = email || '';
+            var length = 3;
+
+            var parts = email.split('@');
+            var masked = parts[0].substr(0, length);
+            var maskLength = parts[0].length - length;
+
+            for (var i = 0; i < maskLength; i++) {
+                masked += '*';
+            }
+            parts[0] = masked;
+            return parts.join('@');
+        }
+    });
+
+    app.filter('maskEmailWithParams', function () {
+        return function (email, length, maskSign) {
+            email = email || '';
+            length = length || 3;
+            maskSign = maskSign || '*';
+
+            var parts = email.split('@');
+            var masked = parts[0].substr(0, length);
+            var maskLength = parts[0].length - length;
+
+            for (var i = 0; i < maskLength; i++) {
+                masked += maskSign;
+            }
+            parts[0] = masked;
+            return parts.join('@');
+        }
+    });
+
+    app.filter('joiner', function () {
+        var history = [];
+
+        return function (input, separator) {
+            history.unshift(input);
+            separator = separator || ', ';
+            return history.join(separator);
+        }
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" ng-app="directives">
+<html lang="pl" ng-app="services">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,28 +20,12 @@
         <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
     </a>
 
-    <div class="navbar-heading">Base directives</div>
+    <div class="navbar-heading">Introduction to services</div>
 </nav>
 
 <div class="container">
-    <div class="row text-center" ng-controller="Controller">
-        <div class="text-center" ng-init="message='This is a first message'">
-            {{ message }}
-        </div>
-
-        <hr>
-
-        <div class="text-center" ng-init="message='This is a second message'">
-            {{ message }}
-        </div>
-
-        <hr>
-
-        <div class="text-centre" ng-init="price=123.321" ng-controller="Controller">
-            {{ message }}
-            <p> {{ price }}</p>
-        </div>
-
+    <div class="row" ng-controller="Controller">
+        {{ number }}
     </div>
 </div>
 
@@ -51,11 +35,10 @@
 <script src="js/main.js"></script>
 
 <script>
-    var app = angular.module('directives', []);
+    var app = angular.module('services', []);
 
     app.controller('Controller', ['$scope', function ($scope) {
-        $scope.message = 'This is a message from controller';
-        $scope.price = 123.123;
+        $scope.number = 4;
     }]);
 
 </script>

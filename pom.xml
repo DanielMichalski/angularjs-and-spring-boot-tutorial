@@ -16,6 +16,7 @@
         <module>C02_Directives</module>
         <module>C03_Forms_validation</module>
         <module>C04_Filters</module>
+        <module>C05_Services</module>
     </modules>
 
     <properties>

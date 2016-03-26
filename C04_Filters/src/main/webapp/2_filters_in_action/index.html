@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="filters2">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Filters in action</div>
+</nav>
+
+<div class="container">
+    <div class="row" ng-controller="Controller">
+        <div class="text-center">
+            {{ "this is uppercase text" | uppercase }}
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            {{ "this is lower case text" | lowercase }}
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <p>{{ price | number }}</p>
+            <p>{{ price | currency}}</p>
+            <p>{{ price | currency : 'PLN' }}</p>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <p>{{ currDate | date }}</p>
+            <p>{{ currDate | date : 'yyyy-MM-dd' }}</p>
+            <p>{{ currDate | date : 'MM-yyyy' }}</p>
+            <p>{{ currDate | date : 'longDate' | uppercase }}</p>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <pre>{{ users }}</pre>
+            <pre>{{ users | json }}</pre>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-locale_pl-pl.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('filters2', []);
+
+    app.controller('Controller', ['$scope', function ($scope) {
+        $scope.price = 1234.5678;
+
+        $scope.currDate = new Date();
+
+        $scope.users = ['John', 'Kate', 'Morgan', 'Thomas']
+    }]);
+
+</script>
+
+</body>
+</html>

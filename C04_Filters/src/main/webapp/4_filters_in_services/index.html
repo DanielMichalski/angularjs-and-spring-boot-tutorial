@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl" ng-app="filters4">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AngularJS tutorial</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,300,600,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <a class="navbar-brand" href="#">
+        <img src="img/angularjs-for-header-only.svg" alt="AngularJS">
+    </a>
+
+    <div class="navbar-heading">Filters in services</div>
+</nav>
+
+<div class="container">
+    <div class="row" ng-controller="Controller">
+        <div class="text-center">
+            <h3>Users</h3>
+            <hr>
+            <pre>{{users | json}}</pre>
+            <hr>
+            <button class="btn btn-success" ng-click="orderUsers()">Order by name</button>
+            <button class="btn btn-primary" ng-click="hideEmails()">Hide e-mail addresses</button>
+            <button class="btn btn-warning" ng-click="showTop3()">Show top 3</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var app = angular.module('filters4', []);
+
+    app.controller('Controller', ['$scope', 'orderByFilter', '$filter' /*, 'maskEmailFilter2'*/ , function ($scope, orderByFilter, $filter/*, maskEmailFilter2*/) {
+        $scope.users = [
+            {name: 'John', email: 'johnblack@gmail.com'},
+            {name: 'Mary', email: 'maryjane@gmail.com'},
+            {name: 'Mark', email: 'markKutenberg@gmail.com'},
+            {name: 'Thomas', email: 'thomas@gmail.com'},
+            {name: 'Jules', email: 'jules@gmail.com'}
+        ];
+
+        $scope.orderUsers = function () {
+            $scope.users = orderByFilter($scope.users, 'name');
+        };
+
+        $scope.hideEmails = function () {
+            alert('It\'s not implemented yet');
+//            var users = $scope.users;
+//            for(var i =0; i < users.length; i++) {
+//                users[i]['email'] = maskEmailFilter2(users[i]['email'], 1);
+//            }
+//            $scope.users = users;
+        };
+
+        $scope.showTop3 = function () {
+            $scope.users = $filter('limitTo')($scope.users, 3);
+        };
+
+    }]);
+
+    app.filter('maskEmailFilter2', function () {
+        return function (email, length, maskSign) {
+            email = email || '';
+            length = length || 3;
+            maskSign = maskSign || '*';
+
+            var parts = email.split('@');
+            var masked = parts[0].substr(0, length);
+            var maskLength = parts[0].length - length;
+
+            for (var i = 0; i < maskLength; i++) {
+                masked += maskSign;
+            }
+            parts[0] = masked;
+            return parts.join('@');
+        }
+    });
+
+</script>
+
+</body>
+</html>
